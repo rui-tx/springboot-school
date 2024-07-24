@@ -34,14 +34,16 @@ public class StudentMapper {
     }
 
     public static Student fromCreationDTO(StudentCreationDTO createStudentDTO) {
-        Student student = new Student();
-        createFromDTO(createStudentDTO, student);
-        return student;
+        if (createStudentDTO == null) {
+            return null;
+        }
+
+        return createFromDTO(createStudentDTO, new Student());
     }
 
-    public static void createFromDTO(StudentCreationDTO createStudentDTO, Student student) {
+    public static Student createFromDTO(StudentCreationDTO createStudentDTO, Student student) {
         if (createStudentDTO == null) {
-            return;
+            return null;
         }
         student.setName(createStudentDTO.name());
         student.setEmail(createStudentDTO.email());
@@ -49,6 +51,7 @@ public class StudentMapper {
         student.setAge(createStudentDTO.age());
         student.setGender(createStudentDTO.gender());
 
+        return student;
 
     }
 }

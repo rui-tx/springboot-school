@@ -29,7 +29,7 @@ public class Student {
     private String gender;
 
     @OneToMany(mappedBy = "student", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<StudentCourse> studentCourses = new HashSet<>();
+    private Set<CourseEntry> coursEntries = new HashSet<>();
 
     /*
     @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
@@ -90,12 +90,12 @@ public class Student {
     }
 
 
-    public Set<StudentCourse> getStudentCourses() {
-        return studentCourses;
+    public Set<CourseEntry> getStudentCourses() {
+        return coursEntries;
     }
 
-    public void setStudentCourses(Set<StudentCourse> studentCourses) {
-        this.studentCourses = studentCourses;
+    public void setStudentCourses(Set<CourseEntry> coursEntries) {
+        this.coursEntries = coursEntries;
     }
 
 

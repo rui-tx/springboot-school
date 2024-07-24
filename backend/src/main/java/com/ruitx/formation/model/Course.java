@@ -29,7 +29,7 @@ public class Course {
     private int maxStudents;
 
     @OneToMany(mappedBy = "course", fetch = FetchType.LAZY)
-    private Set<StudentCourse> studentCourses = new HashSet<>();
+    private Set<CourseEntry> coursEntries = new HashSet<>();
 
     /*
     @ManyToMany(fetch = FetchType.LAZY,
@@ -84,12 +84,20 @@ public class Course {
         this.teacher = teacher;
     }
 
-    public Set<StudentCourse> getStudentCourses() {
-        return studentCourses;
+    public int getMaxStudents() {
+        return maxStudents;
     }
 
-    public void setStudentCourses(Set<StudentCourse> studentCourses) {
-        this.studentCourses = studentCourses;
+    public void setMaxStudents(int maxStudents) {
+        this.maxStudents = maxStudents;
+    }
+
+    public Set<CourseEntry> getStudentCourses() {
+        return coursEntries;
+    }
+
+    public void setStudentCourses(Set<CourseEntry> coursEntries) {
+        this.coursEntries = coursEntries;
     }
 
 }

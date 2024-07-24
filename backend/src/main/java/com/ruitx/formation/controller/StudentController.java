@@ -7,8 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
-@RequestMapping("/student")
+@RequestMapping("api/v1/students")
 public class StudentController {
     private final StudentService studentService;
 
@@ -17,6 +19,11 @@ public class StudentController {
         this.studentService = studentService;
     }
 
+    @GetMapping("/")
+    public ResponseEntity<List<StudentDTO>> getAll() {
+        List<StudentDTO> studentDTOList = studentService.getAll();
+        return ResponseEntity.ok(studentDTOList);
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<StudentDTO> getStudentById(@PathVariable Long id) {
@@ -24,11 +31,16 @@ public class StudentController {
         return ResponseEntity.ok(studentDTO);
     }
 
-
     @PostMapping("/")
     public ResponseEntity<StudentDTO> createStudent(@RequestBody StudentCreationDTO studentDTO) {
         StudentDTO studentDTOCreated = studentService.create(studentDTO);
         return ResponseEntity.ok(studentDTOCreated);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteStudent(@PathVariable Long id) {
+        studentService.delete(id);
+        return ResponseEntity.noContent().build();
     }
 
 }
