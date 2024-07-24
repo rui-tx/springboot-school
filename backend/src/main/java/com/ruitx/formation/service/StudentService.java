@@ -46,6 +46,17 @@ public class StudentService {
         return StudentMapper.toDTO(savedStudent);
     }
 
+    public StudentDTO update(Long id, StudentCreationDTO studentCreationDTO) {
+        Student student = studentRepository.findById(id).orElseThrow(() -> new StudentNotFoundException(STUDENT_NOT_FOUND));
+        student.setName(studentCreationDTO.name());
+        student.setEmail(studentCreationDTO.email());
+        student.setPhone(studentCreationDTO.phone());
+        student.setAge(studentCreationDTO.age());
+        student.setGender(studentCreationDTO.gender());
+        Student savedStudent = studentRepository.save(student);
+        return StudentMapper.toDTO(savedStudent);
+    }
+
     public void delete(Long id) {
         Student studentToDelete = studentRepository.findById(id).orElseThrow(() -> new StudentNotFoundException(STUDENT_NOT_FOUND));
         studentRepository.delete(studentToDelete);
