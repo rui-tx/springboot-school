@@ -1,4 +1,4 @@
-package com.ruitx.formation.exceptions;
+package com.ruitx.formation.exceptions.courseEntry;
 
 public class CourseEntryAlreadyExistsException extends RuntimeException {
     public CourseEntryAlreadyExistsException() {

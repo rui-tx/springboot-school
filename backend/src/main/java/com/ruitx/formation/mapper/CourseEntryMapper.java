@@ -1,7 +1,7 @@
 package com.ruitx.formation.mapper;
 
-import com.ruitx.formation.dto.CourseEntryCreationDTO;
-import com.ruitx.formation.dto.CourseEntryDTO;
+import com.ruitx.formation.dto.courseEntry.CourseEntryCreationDTO;
+import com.ruitx.formation.dto.courseEntry.CourseEntryDTO;
 import com.ruitx.formation.model.Course;
 import com.ruitx.formation.model.CourseEntry;
 import com.ruitx.formation.model.Student;

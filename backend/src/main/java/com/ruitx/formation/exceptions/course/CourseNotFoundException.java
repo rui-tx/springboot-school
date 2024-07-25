@@ -1,4 +1,4 @@
-package com.ruitx.formation.exceptions;
+package com.ruitx.formation.exceptions.course;
 
 public class CourseNotFoundException extends RuntimeException {
     public CourseNotFoundException() {

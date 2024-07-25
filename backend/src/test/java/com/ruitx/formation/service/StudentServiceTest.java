@@ -1,7 +1,7 @@
 package com.ruitx.formation.service;
 
-import com.ruitx.formation.dto.StudentDTO;
-import com.ruitx.formation.exceptions.StudentNotFoundException;
+import com.ruitx.formation.dto.student.StudentDTO;
+import com.ruitx.formation.exceptions.student.StudentNotFoundException;
 import com.ruitx.formation.model.Student;
 import com.ruitx.formation.repository.StudentRepository;
 import org.junit.jupiter.api.Test;
@@ -43,7 +43,7 @@ class StudentServiceTest {
     @Test
     void get_shouldNotFound() {
         when(studentRepository.findById(1L)).thenReturn(Optional.empty());
-        
+
         assertThrows(StudentNotFoundException.class, () -> {
             StudentDTO studentDTO = studentService.get(1L);
         });

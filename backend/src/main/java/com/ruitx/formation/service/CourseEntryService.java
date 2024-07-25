@@ -1,11 +1,11 @@
 package com.ruitx.formation.service;
 
-import com.ruitx.formation.dto.CourseEntryCreationDTO;
-import com.ruitx.formation.dto.CourseEntryDTO;
-import com.ruitx.formation.exceptions.CourseEntryAlreadyExistsException;
-import com.ruitx.formation.exceptions.CourseEntryNotFoundException;
-import com.ruitx.formation.exceptions.CourseNotFoundException;
-import com.ruitx.formation.exceptions.StudentNotFoundException;
+import com.ruitx.formation.dto.courseEntry.CourseEntryCreationDTO;
+import com.ruitx.formation.dto.courseEntry.CourseEntryDTO;
+import com.ruitx.formation.exceptions.course.CourseNotFoundException;
+import com.ruitx.formation.exceptions.courseEntry.CourseEntryAlreadyExistsException;
+import com.ruitx.formation.exceptions.courseEntry.CourseEntryNotFoundException;
+import com.ruitx.formation.exceptions.student.StudentNotFoundException;
 import com.ruitx.formation.mapper.CourseEntryMapper;
 import com.ruitx.formation.model.Course;
 import com.ruitx.formation.model.CourseEntry;
@@ -14,6 +14,7 @@ import com.ruitx.formation.repository.CourseEntryRepository;
 import com.ruitx.formation.repository.CourseRepository;
 import com.ruitx.formation.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -35,6 +36,7 @@ public class CourseEntryService {
         this.courseRepository = courseRepository;
     }
 
+    @Cacheable(value = "entriesCache")
     public List<CourseEntryDTO> getAll() {
         List<CourseEntry> entries = (List<CourseEntry>) courseEntryRepository.findAll();
         List<CourseEntryDTO> entriesDTOs = new ArrayList<>();

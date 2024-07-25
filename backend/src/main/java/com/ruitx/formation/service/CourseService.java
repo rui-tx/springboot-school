@@ -1,12 +1,13 @@
 package com.ruitx.formation.service;
 
-import com.ruitx.formation.dto.CourseCreationDTO;
-import com.ruitx.formation.dto.CourseDTO;
-import com.ruitx.formation.exceptions.CourseNotFoundException;
+import com.ruitx.formation.dto.course.CourseCreationDTO;
+import com.ruitx.formation.dto.course.CourseDTO;
+import com.ruitx.formation.exceptions.course.CourseNotFoundException;
 import com.ruitx.formation.mapper.CourseMapper;
 import com.ruitx.formation.model.Course;
 import com.ruitx.formation.repository.CourseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -24,6 +25,12 @@ public class CourseService {
         this.courseRepository = courseRepository;
     }
 
+    /**
+     * Get all courses
+     *
+     * @return List of courses
+     */
+    @Cacheable(value = "courseCache")
     public List<CourseDTO> getAll() {
         List<Course> courses = (List<Course>) courseRepository.findAll();
         List<CourseDTO> coursesDTOs = new ArrayList<>();
@@ -33,6 +40,12 @@ public class CourseService {
         return coursesDTOs;
     }
 
+    /**
+     * Get a course by id
+     *
+     * @param id Course id
+     * @return Course default object
+     */
     public CourseDTO get(Long id) {
         Optional<Course> course = courseRepository.findById(id);
 
@@ -43,12 +56,23 @@ public class CourseService {
         return CourseMapper.toDTO(course.get());
     }
 
+    /**
+     * Create a course
+     *
+     * @param courseCreationDTO Course creation DTO
+     * @return Course default object
+     */
     public CourseDTO create(CourseCreationDTO courseCreationDTO) {
         Course newCourse = CourseMapper.fromCreationDTO(courseCreationDTO);
         Course savedCourse = courseRepository.save(newCourse);
         return CourseMapper.toDTO(savedCourse);
     }
 
+    /**
+     * Delete a course
+     *
+     * @param id Course id
+     */
     public void delete(Long id) {
         Course courseToDelete = courseRepository.findById(id).orElseThrow(() -> new CourseNotFoundException(COURSE_NOT_FOUND));
         courseRepository.delete(courseToDelete);

@@ -1,7 +1,11 @@
 package com.ruitx.formation.aspect;
 
 import com.ruitx.formation.exceptions.Error;
-import com.ruitx.formation.exceptions.*;
+import com.ruitx.formation.exceptions.ErrorMessage;
+import com.ruitx.formation.exceptions.course.CourseNotFoundException;
+import com.ruitx.formation.exceptions.courseEntry.CourseEntryAlreadyExistsException;
+import com.ruitx.formation.exceptions.courseEntry.CourseEntryNotFoundException;
+import com.ruitx.formation.exceptions.student.StudentNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

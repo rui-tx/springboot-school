@@ -1,12 +1,13 @@
 package com.ruitx.formation.service;
 
-import com.ruitx.formation.dto.StudentCreationDTO;
-import com.ruitx.formation.dto.StudentDTO;
-import com.ruitx.formation.exceptions.StudentNotFoundException;
+import com.ruitx.formation.dto.student.StudentCreationDTO;
+import com.ruitx.formation.dto.student.StudentDTO;
+import com.ruitx.formation.exceptions.student.StudentNotFoundException;
 import com.ruitx.formation.mapper.StudentMapper;
 import com.ruitx.formation.model.Student;
 import com.ruitx.formation.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -24,6 +25,7 @@ public class StudentService {
         this.studentRepository = studentRepository;
     }
 
+    @Cacheable(value = "studentCache")
     public List<StudentDTO> getAll() {
         List<Student> students = (List<Student>) studentRepository.findAll();
         List<StudentDTO> studentsDTOs = new ArrayList<>();

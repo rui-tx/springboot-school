@@ -1,4 +1,4 @@
-package com.ruitx.formation.exceptions;
+package com.ruitx.formation.exceptions.student;
 
 public class StudentNotFoundException extends RuntimeException {
     public StudentNotFoundException() {
