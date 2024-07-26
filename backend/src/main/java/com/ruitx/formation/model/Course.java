@@ -2,6 +2,7 @@ package com.ruitx.formation.model;
 
 import jakarta.persistence.*;
 
+import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -13,35 +14,24 @@ public class Course {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
     private String name;
 
     @Column(name = "description")
     private String description;
 
-    @Column(name = "credits")
+    @Column(name = "credits", nullable = false)
     private int credits;
 
-    @Column(name = "teacher")
-    private String teacher;
-
-    @Column(name = "max_students")
+    @Column(name = "max_students", nullable = false)
     private int maxStudents;
 
+    @Column(name = "last_updated", columnDefinition = "TIMESTAMP")
+    private Instant lastUpdated;
+
     @OneToMany(mappedBy = "course", fetch = FetchType.LAZY)
-    private Set<CourseEntry> coursEntries = new HashSet<>();
+    private Set<CourseTeacher> CourseTeachers = new HashSet<>();
 
-    /*
-    @ManyToMany(fetch = FetchType.LAZY,
-            cascade = {
-                    CascadeType.PERSIST,
-                    CascadeType.MERGE
-            },
-            mappedBy = "courses")
-    private Set<Student> students = new HashSet<>();
-
-
-     */
     // getters and setters
 
     public Long getId() {
@@ -76,14 +66,6 @@ public class Course {
         this.credits = credits;
     }
 
-    public String getTeacher() {
-        return teacher;
-    }
-
-    public void setTeacher(String teacher) {
-        this.teacher = teacher;
-    }
-
     public int getMaxStudents() {
         return maxStudents;
     }
@@ -92,12 +74,13 @@ public class Course {
         this.maxStudents = maxStudents;
     }
 
-    public Set<CourseEntry> getStudentCourses() {
-        return coursEntries;
+    public Set<CourseTeacher> getCourseTeachers() {
+        return CourseTeachers;
     }
 
-    public void setStudentCourses(Set<CourseEntry> coursEntries) {
-        this.coursEntries = coursEntries;
+    public void setCourseTeachers(Set<CourseTeacher> CourseTeachers) {
+        this.CourseTeachers = CourseTeachers;
     }
+
 
 }

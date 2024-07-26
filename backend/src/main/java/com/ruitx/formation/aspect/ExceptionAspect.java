@@ -6,6 +6,7 @@ import com.ruitx.formation.exceptions.course.CourseNotFoundException;
 import com.ruitx.formation.exceptions.courseEntry.CourseEntryAlreadyExistsException;
 import com.ruitx.formation.exceptions.courseEntry.CourseEntryNotFoundException;
 import com.ruitx.formation.exceptions.student.StudentNotFoundException;
+import com.ruitx.formation.exceptions.teacher.TeacherNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,7 +27,8 @@ public class ExceptionAspect {
     @ExceptionHandler({
             StudentNotFoundException.class,
             CourseNotFoundException.class,
-            CourseEntryNotFoundException.class
+            CourseEntryNotFoundException.class,
+            TeacherNotFoundException.class
     })
     public ResponseEntity<String> HandleNotFoundException(Exception e, HttpServletRequest request) {
         logger.error("{}: {}", ErrorMessage.HANDLE_NOT_FOUND, e.getMessage());

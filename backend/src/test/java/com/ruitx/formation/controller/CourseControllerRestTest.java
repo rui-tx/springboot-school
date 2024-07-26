@@ -45,8 +45,8 @@ public class CourseControllerRestTest {
     @Test
     public void gettingAllCourses_shouldSucceed() {
         List<CourseDTO> courses = Arrays.asList(
-                new CourseDTO(1L, "Math 101", "Math 101 description", 10, "Math 101 teacher", 30),
-                new CourseDTO(2L, "Physics 101", "Physics 101 description", 10, "Physics 101 teacher", 30)
+                new CourseDTO(1L, "Math 101", "Math 101 description", 10, 30),
+                new CourseDTO(2L, "Physics 101", "Physics 101 description", 10, 30)
         );
 
         when(courseService.getAll()).thenReturn(courses);
@@ -68,14 +68,13 @@ public class CourseControllerRestTest {
             assertEquals(returnedCourseList.get(i).name(), courses.get(i).name());
             assertEquals(returnedCourseList.get(i).description(), courses.get(i).description());
             assertEquals(returnedCourseList.get(i).credits(), courses.get(i).credits());
-            assertEquals(returnedCourseList.get(i).teacher(), courses.get(i).teacher());
             assertEquals(returnedCourseList.get(i).maxStudents(), courses.get(i).maxStudents());
         }
     }
 
     @Test
     public void gettingCourseById_shouldSucceed() {
-        CourseDTO course = new CourseDTO(1L, "Math 101", "Math 101 description", 10, null, 30);
+        CourseDTO course = new CourseDTO(1L, "Math 101", "Math 101 description", 10, 30);
 
         when(courseService.get(1L)).thenReturn(course);
 
@@ -91,8 +90,8 @@ public class CourseControllerRestTest {
 
     @Test
     public void creatingCourse_shouldSucceed() {
-        CourseCreationDTO courseCreationDTO = new CourseCreationDTO("Math 101", "Math 101 description", 10, "Math 101 teacher", 30);
-        CourseDTO courseDTO = new CourseDTO(1L, "Math 101", "Math 101 description", 10, "Math 101 teacher", 30);
+        CourseCreationDTO courseCreationDTO = new CourseCreationDTO("Math 101", "Math 101 description", 10, 30);
+        CourseDTO courseDTO = new CourseDTO(1L, "Math 101", "Math 101 description", 10, 30);
 
         when(courseService.create(courseCreationDTO)).thenReturn(courseDTO);
 
@@ -107,7 +106,6 @@ public class CourseControllerRestTest {
                 .body("name", equalTo("Math 101"))
                 .body("description", equalTo("Math 101 description"))
                 .body("credits", equalTo(10))
-                .body("teacher", equalTo("Math 101 teacher"))
                 .body("maxStudents", equalTo(30));
     }
 

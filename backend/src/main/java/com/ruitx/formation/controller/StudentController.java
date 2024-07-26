@@ -12,9 +12,11 @@ import org.springframework.web.bind.annotation.*;
 import java.net.URI;
 import java.util.List;
 
+import static com.ruitx.formation.config.Constants.STUDENT_MAPPING;
+
 @Tag(name = "Student", description = "Student API")
 @RestController
-@RequestMapping("api/v1/students")
+@RequestMapping(STUDENT_MAPPING)
 public class StudentController {
     private final StudentService studentService;
 

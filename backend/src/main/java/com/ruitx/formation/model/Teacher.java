@@ -8,8 +8,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "student")
-public class Student {
+@Table(name = "teacher")
+public class Teacher {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,11 +31,14 @@ public class Student {
     @Column(name = "gender")
     private String gender;
 
+    @Column(name = "department", nullable = false)
+    private String department;
+
     @Column(name = "last_updated", columnDefinition = "TIMESTAMP")
     private Instant lastUpdated;
 
-    @OneToMany(mappedBy = "student", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<CourseEntry> coursEntries = new HashSet<>();
+    @OneToMany(mappedBy = "teacher", fetch = FetchType.LAZY)
+    private Set<CourseTeacher> CourseTeachers = new HashSet<>();
 
     // getters and setters
     public Long getId() {
@@ -86,21 +89,28 @@ public class Student {
         this.gender = gender;
     }
 
+    public String getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(String department) {
+        this.department = department;
+    }
+
     public Instant getLastUpdated() {
         return lastUpdated;
     }
-    
+
     public void setLastUpdated(Instant lastUpdated) {
         this.lastUpdated = lastUpdated;
     }
 
-    public Set<CourseEntry> getStudentCourses() {
-        return coursEntries;
+    public Set<CourseTeacher> getCourseTeachers() {
+        return CourseTeachers;
     }
 
-    public void setStudentCourses(Set<CourseEntry> coursEntries) {
-        this.coursEntries = coursEntries;
+    public void setCourseTeachers(Set<CourseTeacher> CourseTeachers) {
+        this.CourseTeachers = CourseTeachers;
     }
-
 
 }

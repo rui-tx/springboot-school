@@ -15,7 +15,6 @@ public class CourseMapper {
                 course.getName(),
                 course.getDescription(),
                 course.getCredits(),
-                course.getTeacher(),
                 course.getMaxStudents()
         );
     }
@@ -29,7 +28,6 @@ public class CourseMapper {
         course.setName(courseDTO.name());
         course.setDescription(courseDTO.description());
         course.setCredits(courseDTO.credits());
-        course.setTeacher(courseDTO.teacher());
         course.setMaxStudents(courseDTO.maxStudents());
         return course;
     }
@@ -48,7 +46,6 @@ public class CourseMapper {
         course.setName(courseCreationDTO.name());
         course.setDescription(courseCreationDTO.description());
         course.setCredits(courseCreationDTO.credits());
-        course.setTeacher(courseCreationDTO.teacher());
         course.setMaxStudents(courseCreationDTO.maxStudents());
 
         return course;

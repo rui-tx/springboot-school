@@ -14,7 +14,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
 
+import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import static io.restassured.module.mockmvc.RestAssuredMockMvc.given;
@@ -44,8 +46,8 @@ public class CourseEntryControllerRestTest {
     @Disabled
     public void gettingAllCourseEntries_shouldSucceed() {
         List<CourseEntryDTO> courseEntries = Arrays.asList(
-                new CourseEntryDTO(1L, 1L, 1L, 10L, 2024, true),
-                new CourseEntryDTO(2L, 2L, 2L, 10L, 2024, true)
+                new CourseEntryDTO(1L, 1L, 1L, 10f, LocalDate.now(), true),
+                new CourseEntryDTO(2L, 2L, 2L, 10f, LocalDate.now(), true)
         );
 
         when(courseEntryService.getAll()).thenReturn(courseEntries);
@@ -59,22 +61,22 @@ public class CourseEntryControllerRestTest {
                 .body("[0].id", equalTo(1L))
                 .body("[0].studentId", equalTo(1L))
                 .body("[0].courseId", equalTo(1L))
-                .body("[0].grade", equalTo(10L))
-                .body("[0].dateRegistered", equalTo(2024))
+                .body("[0].grade", equalTo(10f))
+                .body("[0].dateRegistered", equalTo(LocalDate.now()))
                 .body("[0].isActive", equalTo(true))
 
                 .body("[1].id", equalTo(2L))
                 .body("[1].studentId", equalTo(2L))
                 .body("[1].courseId", equalTo(2L))
-                .body("[1].grade", equalTo(10L))
-                .body("[1].dateRegistered", equalTo(2024))
+                .body("[1].grade", equalTo(10f))
+                .body("[1].dateRegistered", equalTo(LocalDate.now()))
                 .body("[1].isActive", equalTo(true));
     }
 
     @Test
     @Disabled
     public void gettingCourseEntryById_shouldSucceed() {
-        CourseEntryDTO courseEntry = new CourseEntryDTO(1L, 1L, 1L, 10L, 2024, true);
+        CourseEntryDTO courseEntry = new CourseEntryDTO(1L, 1L, 1L, 10f, LocalDate.now(), true);
 
         when(courseEntryService.get(1L)).thenReturn(courseEntry);
 
@@ -88,16 +90,16 @@ public class CourseEntryControllerRestTest {
                 .body("name", equalTo("Entry 1"))
                 .body("studentId", equalTo(1L))
                 .body("courseId", equalTo(1L))
-                .body("grade", equalTo(10L))
-                .body("dateRegistered", equalTo(2024))
+                .body("grade", equalTo(10f))
+                .body("dateRegistered", equalTo(LocalDate.now()))
                 .body("isActive", equalTo(true));
     }
 
     @Test
     @Disabled
     public void creatingCourseEntry_shouldSucceed() {
-        CourseEntryCreationDTO courseEntryCreationDTO = new CourseEntryCreationDTO(1L, 1L, 10L, 2024, true);
-        CourseEntryDTO courseEntryDTO = new CourseEntryDTO(1L, 1L, 1L, 10L, 2024, true);
+        CourseEntryCreationDTO courseEntryCreationDTO = new CourseEntryCreationDTO(1L, 1L, 10f, LocalDate.now(), true);
+        CourseEntryDTO courseEntryDTO = new CourseEntryDTO(1L, 1L, 1L, 10f, LocalDate.now(), true);
 
         when(courseEntryService.create(courseEntryCreationDTO)).thenReturn(courseEntryDTO);
 
@@ -112,16 +114,16 @@ public class CourseEntryControllerRestTest {
                 .body("name", equalTo("Entry 1"))
                 .body("studentId", equalTo(1L))
                 .body("courseId", equalTo(1L))
-                .body("grade", equalTo(10L))
-                .body("dateRegistered", equalTo(2024))
+                .body("grade", equalTo(10f))
+                .body("dateRegistered", equalTo(LocalDate.now()))
                 .body("isActive", equalTo(true));
     }
 
     @Test
     @Disabled
     public void creatingCourseDuplicateEntry_shouldFail() {
-        CourseEntryCreationDTO courseEntryCreationDTO = new CourseEntryCreationDTO(1L, 1L, 10L, 2024, true);
-        CourseEntryDTO courseEntryDTO = new CourseEntryDTO(1L, 1L, 1L, 10L, 2024, true);
+        CourseEntryCreationDTO courseEntryCreationDTO = new CourseEntryCreationDTO(1L, 1L, 10f, LocalDate.now(), true);
+        CourseEntryDTO courseEntryDTO = new CourseEntryDTO(1L, 1L, 1L, 10f, LocalDate.now(), true);
 
         //when(courseEntryService.create(courseEntryCreationDTO)).thenReturn(courseEntryDTO);
 

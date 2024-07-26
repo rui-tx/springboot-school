@@ -8,6 +8,14 @@ public class ErrorMessage {
     public static final String COURSE_ENTRY_NOT_FOUND = "Course entry not found";
     public static final String COURSE_ENTRY_ALREADY_EXISTS = "A course entry with this student id and course id already exists";
 
+    public static final String TEACHER_NOT_FOUND = "Teacher not found";
+    public static final String TEACHER_ALREADY_EXISTS = "A teacher with this name already exists";
+    public static final String TEACHER_COURSE_ALREADY_EXISTS = "A teacher with this name already exists";
+
+    public static final String COURSE_TEACHER_GROUP_NOT_FOUND = "Course teacher group Id not found";
+
+    public static final String CLASS_NOT_FOUND = "Class not found";
+
     public static final String HANDLE_NOT_FOUND = "Handle not found";
     public static final String HANDLE_ALREADY_EXISTS = "Duplicate entity found";
     public static final String HANDLE_NO_RESOURCE_FOUND = "The requested resource was not found";
