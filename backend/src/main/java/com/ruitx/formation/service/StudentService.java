@@ -20,20 +20,24 @@ import static com.ruitx.formation.exceptions.ErrorMessage.STUDENT_NOT_FOUND;
 public class StudentService {
     private final StudentRepository studentRepository;
 
+
     @Autowired
     public StudentService(StudentRepository studentRepository) {
+
         this.studentRepository = studentRepository;
     }
 
-    @Cacheable(value = "studentCache")
+    @Cacheable(value = "studentCache", unless = "#result == null")
     public List<StudentDTO> getAll() {
         List<Student> students = (List<Student>) studentRepository.findAll();
         List<StudentDTO> studentsDTOs = new ArrayList<>();
 
         students.forEach(student -> studentsDTOs.add(StudentMapper.toDTO(student)));
+
         return studentsDTOs;
     }
 
+    @Cacheable(value = "studentCacheId", key = "#id", unless = "#result == null")
     public StudentDTO get(Long id) {
         Optional<Student> student = studentRepository.findById(id);
         if (student.isEmpty()) {
@@ -42,6 +46,7 @@ public class StudentService {
         return StudentMapper.toDTO(student.get());
     }
 
+    //@Cacheable(value = "studentCache", key = "#studentId", condition = "#studentId != null")
     public StudentDTO create(StudentCreationDTO studentCreationDTO) {
         Student newStudent = StudentMapper.fromCreationDTO(studentCreationDTO);
         Student savedStudent = studentRepository.save(newStudent);

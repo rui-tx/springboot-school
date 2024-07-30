@@ -1,18 +1,23 @@
 package com.ruitx.formation.controller;
 
 import com.ruitx.formation.dto.course.CourseCreationDTO;
+import com.ruitx.formation.dto.courseEntry.CourseEntryCreationDTO;
 import com.ruitx.formation.dto.student.StudentCreationDTO;
 import com.ruitx.formation.dto.teacher.TeacherCreationDTO;
+import com.ruitx.formation.service.CourseEntryService;
 import com.ruitx.formation.service.CourseService;
 import com.ruitx.formation.service.StudentService;
 import com.ruitx.formation.service.TeacherService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestClient;
 
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Random;
 
@@ -25,12 +30,27 @@ public class AdminController {
     private final CourseService courseService;
     private final StudentService studentService;
     private final TeacherService teacherService;
+    private final CourseEntryService courseEntryService;
 
     @Autowired
-    public AdminController(CourseService courseService, StudentService studentService, TeacherService teacherService) {
+    public AdminController(CourseService courseService, StudentService studentService,
+                           TeacherService teacherService, CourseEntryService courseEntryService) {
         this.studentService = studentService;
         this.teacherService = teacherService;
         this.courseService = courseService;
+        this.courseEntryService = courseEntryService;
+    }
+
+    @Cacheable(value = "randomUserId", unless = "#result == null")
+    @GetMapping("/randomUser")
+    public ResponseEntity<String> randomUser() {
+        RestClient restClient = RestClient.create();
+        String result = restClient.get()
+                .uri("https://randomuser.me/api/?results=1")
+                .retrieve()
+                .body(String.class);
+
+        return ResponseEntity.ok(result);
     }
 
     @GetMapping("/initDB")
@@ -77,6 +97,22 @@ public class AdminController {
                     randomMaxStudents
             );
             courseService.create(course);
+        }
+
+        for (int i = 0; i < entityNumber; i++) {
+            long randomStudentId = new Random().nextLong(entityNumber);
+            long randomCourseId = new Random().nextLong(entityNumber);
+            float randomGrade = new Random().nextFloat();
+            LocalDate randomDateRegistered = LocalDate.now();
+            boolean randomIsActive = new Random().nextBoolean();
+            CourseEntryCreationDTO courseEntry = new CourseEntryCreationDTO(
+                    randomStudentId,
+                    randomCourseId,
+                    randomGrade,
+                    randomDateRegistered,
+                    randomIsActive
+            );
+            courseEntryService.create(courseEntry);
         }
 
         return ResponseEntity.noContent().build();

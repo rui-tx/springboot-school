@@ -36,7 +36,7 @@ public class CourseEntryService {
         this.courseRepository = courseRepository;
     }
 
-    @Cacheable(value = "entriesCache")
+    @Cacheable(value = "entriesCache", unless = "#result == null")
     public List<CourseEntryDTO> getAll() {
         List<CourseEntry> entries = (List<CourseEntry>) courseEntryRepository.findAll();
         List<CourseEntryDTO> entriesDTOs = new ArrayList<>();
@@ -46,6 +46,7 @@ public class CourseEntryService {
         return entriesDTOs;
     }
 
+    @Cacheable(value = "entriesCacheId", key = "#id", unless = "#result == null")
     public CourseEntryDTO get(Long id) {
         Optional<CourseEntry> entry = courseEntryRepository.findById(id);
 

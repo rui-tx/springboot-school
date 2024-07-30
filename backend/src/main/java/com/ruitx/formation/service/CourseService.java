@@ -30,7 +30,7 @@ public class CourseService {
      *
      * @return List of courses
      */
-    @Cacheable(value = "courseCache")
+    @Cacheable(value = "courseCache", unless = "#result == null")
     public List<CourseDTO> getAll() {
         List<Course> courses = (List<Course>) courseRepository.findAll();
         List<CourseDTO> coursesDTOs = new ArrayList<>();
@@ -46,6 +46,7 @@ public class CourseService {
      * @param id Course id
      * @return Course default object
      */
+    @Cacheable(value = "courseCacheId", key = "#id", unless = "#result == null")
     public CourseDTO get(Long id) {
         Optional<Course> course = courseRepository.findById(id);
 
