@@ -3,7 +3,6 @@ package com.ruitx.formation.service;
 import com.ruitx.formation.model.Event;
 import com.ruitx.formation.repository.EventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -15,7 +14,7 @@ public class EventService {
         this.eventRepository = eventRepository;
     }
 
-    @Cacheable(value = "eventCache")
+    //@Cacheable(value = "eventCache", key = "#eventId")
     public Event create(Event event) {
         return eventRepository.save(event);
     }

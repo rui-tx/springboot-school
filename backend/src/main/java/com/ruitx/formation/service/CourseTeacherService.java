@@ -22,7 +22,7 @@ public class CourseTeacherService {
         this.courseTeacherRepository = courseTeacherRepository;
     }
 
-    @Cacheable(value = "courseTeacherCache")
+    @Cacheable(value = "courseTeacherCache", key = "#courseTeacherId")
     public List<CourseTeacherDTO> getAll() {
         List<CourseTeacher> courseTeachers = (List<CourseTeacher>) courseTeacherRepository.findAll();
         List<CourseTeacherDTO> courseTeachersDTOs = new java.util.ArrayList<>();
@@ -32,6 +32,7 @@ public class CourseTeacherService {
         return courseTeachersDTOs;
     }
 
+    @Cacheable(value = "courseTeacherCacheId", key = "#id", unless = "#result == null")
     public CourseTeacherDTO get(Long id) {
         CourseTeacher courseTeacher = courseTeacherRepository.findById(id).orElseThrow(() -> new CourseTeacherNotFoundException(COURSE_TEACHER_GROUP_NOT_FOUND));
         return CourseTeacherMapper.toDTO(courseTeacher);

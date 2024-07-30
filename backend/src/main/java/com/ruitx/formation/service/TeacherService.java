@@ -25,7 +25,7 @@ public class TeacherService {
         this.teacherRepository = teacherRepository;
     }
 
-    @Cacheable(value = "teacherCache")
+    @Cacheable(value = "teacherCache", unless = "#result == null")
     public List<TeacherDTO> getAll() {
         List<Teacher> teachers = (List<Teacher>) teacherRepository.findAll();
         List<TeacherDTO> teachersDTOs = new ArrayList<>();
@@ -34,6 +34,7 @@ public class TeacherService {
         return teachersDTOs;
     }
 
+    @Cacheable(value = "teacherCacheId", key = "#id", unless = "#result == null")
     public TeacherDTO get(Long id) {
         Optional<Teacher> teacher = teacherRepository.findById(id);
         if (teacher.isEmpty()) {

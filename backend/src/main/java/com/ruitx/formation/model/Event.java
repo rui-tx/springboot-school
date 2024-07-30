@@ -9,25 +9,33 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "event")
 public class Event {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @Column(name = "event_type", nullable = false)
     @Enumerated(EnumType.STRING)
     private EventType eventType;
-
     @Column(name = "event_name", nullable = false)
     private String eventName;
-
     @Column(name = "event_date", nullable = false, columnDefinition = "DATE")
     private LocalDate eventDate;
-
     @Column(name = "event_time", nullable = false, columnDefinition = "TIMESTAMP")
     private LocalDateTime eventTime;
-
     @Column(name = "created_at", nullable = false, updatable = false, columnDefinition = "TIMESTAMP")
     private Instant createdAt;
+
+    @Override
+    public String toString() {
+        return "Event{" +
+                "id=" + id +
+                ", eventType=" + eventType +
+                ", eventName='" + eventName + '\'' +
+                ", eventDate=" + eventDate +
+                ", eventTime=" + eventTime +
+                ", createdAt=" + createdAt +
+                '}';
+    }
 
     // Getters and Setters
     public Long getId() {
